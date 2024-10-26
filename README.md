@@ -2,12 +2,16 @@
 
 ## Links
 
-[![GitHub](https://img.shields.io/badge/GITHUB-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/hwna00/2023ESWContest_webOS_3015) [![YouTube](https://img.shields.io/badge/YOUTUBE-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com) [![PowerPoint](https://img.shields.io/badge/POWERPOINT-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white)](https://www.microsoft.com/en-us/microsoft-365/powerpoint)
+### firmware-Github
+[![GitHub](https://img.shields.io/badge/GITHUB-000000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/roll4ward/ESWContest-ThreadModule) 
+
+### Others
+[![YouTube](https://img.shields.io/badge/YOUTUBE-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/KivOYPYOhD8) [![PowerPoint](https://img.shields.io/badge/POWERPOINT-B7472A?style=for-the-badge&logo=microsoft-powerpoint&logoColor=white)](https://docs.google.com/presentation/d/1gpYKtbu3-wTxwrp7OETVl8aiAA4hDhQ9/edit?usp=sharing&ouid=100062750372709514654&rtpof=true&sd=true)
 
 ## 목차 📋
 - [프로젝트 소개](#프로젝트-소개)
-- [서비스 개요](#서비스-개요)
 - [주요 기능](#주요-기능)
+- [파일 구조](#파일-구조)
 - [개발 일정](#개발-일정)
 - [기술 스택](#기술-스택)
 - [팀 소개](#팀-소개)
@@ -84,9 +88,9 @@ AI와 고급 통신 프로토콜을 활용하여 사용자와 농업 장비 간�
 
 ---
 
-# 개발 일정 📅
 
-<img src="https://github.com/user-attachments/assets/0ae64a3a-19fa-44d0-9dff-c8fe0553b0f1" alt="개발 일정" width="500px" />
+# 개발 일정 📅
+<img src="https://github.com/user-attachments/assets/90e01838-fe1f-432b-8ba5-92271b3ea791" alt="개발 일정" width="500px" />
 
 ---
 
