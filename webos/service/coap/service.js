@@ -351,6 +351,7 @@ function sendMessageAndSave(deviceInfo, payload) {
         }
         catch (err) {
             rej(err);
+            console.log("Failed to send data: ", err);
             return;
         }
 
@@ -359,9 +360,10 @@ function sendMessageAndSave(deviceInfo, payload) {
         }
         catch (err) {
             rej("Failed to save data : ", err);
+            console.log("Failed to save data: ", err);
             return;
         }
-
+        console.log("Success : ", response_value);
         res(response_value);
     });
 }
@@ -377,7 +379,10 @@ service.register("send", (message) => {
 
     getDeviceInfo(message.payload.deviceId)
     .then((deviceInfo) => {
-        sendMessageAndSave(deviceInfo, message.payload.payload);
+        sendMessageAndSave(deviceInfo, message.payload.payload)
+        .catch((err) => {
+                        console.log("Send Coap err in post : ", err);
+                    });
     })
     .then((response) => {
         message.respond({
@@ -407,10 +412,12 @@ service.register("startSending", (message) => {
             getAllDeviceInfos()
             .then((deviceInfos) => {
                 deviceInfos.forEach((deviceInfo) => {
-                    sendMessageAndSave(deviceInfo)
-                    .catch((err) => {
-                        console.log("Send Coap err in interval : ", err);
-                    });
+                    if (deviceInfo.type === "sensor"){
+                        sendMessageAndSave(deviceInfo)
+                        .catch((err) => {
+                            console.log("Send Coap err in interval : ", err);
+                        });
+                    }
                 });
             })
             .catch((reason) => {

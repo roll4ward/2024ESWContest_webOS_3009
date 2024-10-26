@@ -69,7 +69,7 @@ module.exports = (service) => {
                 
                 const clientId = response.payload.clientId;
                 let trial = 0;
-                while (trial < 1000) {
+                while (trial < 2000) {
                     try {
                         await callDiscoveryService(service, message.payload.address, clientId);
                         break;
@@ -79,7 +79,7 @@ module.exports = (service) => {
                         continue;
                     }
                 }
-                if (trial >= 1000) {
+                if (trial >= 2000) {
                     disconnect(service, clientId);
                     message.respond(new Respond(false, {
                         status: 0,
