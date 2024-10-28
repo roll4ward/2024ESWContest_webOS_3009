@@ -97,7 +97,8 @@ service.register('update', function(message) {
 service.register('read', function(message) {
     const query = {
         from: DB_KIND,
-        where: []
+        where: [],
+        desc: true
     };
 
     if (message.payload.id) {
