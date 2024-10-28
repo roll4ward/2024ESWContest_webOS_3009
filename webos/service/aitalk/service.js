@@ -469,7 +469,7 @@ function getDeviceList(areaId, service) {
   return new Promise((resolve, reject) => {
     try {
       const query = {
-        select: ["_id", "areaId", "name", "type", "desc", "subtype"],
+        select: ["_id", "areaId", "name", "type", "desc", "subtype", "unit"],
         areaId: areaId,
       };
       console.log("query: ", query);
@@ -525,11 +525,14 @@ function getSensorValuesOfAreaByTimeAsCSV(areaId, NHoursAgo, service) {
 
       // 1. deviceId와 subtype을 매핑
       const deviceIdToSensor = {};
+      const deviceIdToUnit = {}
 
       devices.forEach(device => {
         const deviceId = device._id;
         const sensorType = device.subtype;
+        const sensorUnit = device.unit;
         deviceIdToSensor[deviceId] = sensorType;
+        deviceIdToUnit[deviceId] = sensorUnit;
       });
 
       // 2. 고유한 subtype 목록 추출
@@ -563,7 +566,7 @@ function getSensorValuesOfAreaByTimeAsCSV(areaId, NHoursAgo, service) {
         if (!timeMap[isoTime]) {
           timeMap[isoTime] = { time: isoTime };
         }
-        timeMap[isoTime][sensorType] = item.value;
+        timeMap[isoTime][sensorType] = `${item.value}${deviceIdToUnit[item.deviceId]}`;
       });
 
       // 시간별로 정렬된 레코드 배열 생성
