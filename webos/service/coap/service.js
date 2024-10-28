@@ -109,6 +109,10 @@ service.register('read', function(message) {
         query.where.push({ prop: 'deviceId', op: '=', val: message.payload.deviceId });
     }
 
+    if (message.payload.page) {
+        query.page = message.payload.page;
+    }
+
     service.call('luna://com.webos.service.db/find', { query: query }, (response) => {
         if (response.payload.returnValue) {
             if (message.payload.deviceIds) {
@@ -122,6 +126,10 @@ service.register('read', function(message) {
                response.payload.results = select;
             }
 
+            if (response.payload.next) {
+                message.respond({ returnValue: true, results: response.payload.results, next: response.payload.next });
+                return;
+            }
             message.respond({ returnValue: true, results: response.payload.results });
         } else {
             message.respond({ returnValue: false, results: response.error });
@@ -147,6 +155,10 @@ service.register('read/recent', function(message) {
         desc: true
     };
 
+    if (message.payload.page) {
+        query.page = message.payload.page;
+    }
+
     service.call('luna://com.webos.service.db/find', { query: query }, (response) => {
         console.log(response);
         if (response.payload.returnValue) {
@@ -154,7 +166,11 @@ service.register('read/recent', function(message) {
 
             console.log(result);
             
-            message.respond({ returnValue: true, results: result });
+            if (response.payload.next) {
+                message.respond({ returnValue: true, results: response.payload.results, next: response.payload.next });
+                return;
+            }
+            message.respond({ returnValue: true, results: response.payload.results });
         } else {
             message.respond({ returnValue: false, results: response.error });
         }
