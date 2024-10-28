@@ -29,7 +29,8 @@ service.register('createKind', function(message) {
         indexes: [
             { name: 'deviceId', props: [{ name: 'deviceId' }] },
             { name: 'deviceId_latest', props: [ {name: 'deviceId'}, {name: "_rev"}]},
-            { name: 'deviceId_recent', props: [ {name: 'deviceId'}, {name: "time"}]}
+            { name: 'deviceId_recent', props: [ {name: 'deviceId'}, {name: "time"}]},
+            { name: 'recent', props: [ {name: "time"}]},
         ]
     };
 
@@ -139,7 +140,7 @@ service.register('read', function(message) {
 
 // 가장 최근에 측정된 값 read
 service.register('read/recent', function(message) {
-    if (!(message.payload.deviceId && message.payload.hour)) {
+    if (!((message.payload.deviceId || message.payload.deviceIds) && message.payload.hour)) {
         message.respond({ returnValue: false, results: "deviceId & hour are required."});
         return;
     }
@@ -149,11 +150,14 @@ service.register('read/recent', function(message) {
     const query = {
         from: DB_KIND,
         where: [
-            { prop: 'deviceId', op: '=', val: message.payload.deviceId },
             { prop: 'time', op: '>=', val: n_hour_ago }
         ],
         desc: true
     };
+
+    if (message.payload.deviceId) {
+        query.where.push({ prop: 'deviceId', op: '=', val: message.payload.deviceId });
+    }
 
     if (message.payload.page) {
         query.page = message.payload.page;
