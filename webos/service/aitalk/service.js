@@ -132,6 +132,12 @@ class AITalkEventHandler extends Events.EventEmitter {
               console.log("payload: ", payload);
               return payload;
             } else if (toolCall.function.name === "getSensorValuesOfAreaByTimeAsCSV") {
+              this.msg.respond(
+                new aitalk_response({
+                  chunks: "센서값을 분석하고 있습니다.",
+                  isStreaming: true
+                })
+              );
               console.log("getSensorValuesOfAreaByTimeAsCSV invoked");
               console.log("toolCall, ", toolCall.function.name);
 
