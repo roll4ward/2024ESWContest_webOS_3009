@@ -546,7 +546,7 @@ function getSensorValuesOfAreaByTimeAsCSV(areaId, NHoursAgo, service) {
       let page = null;
 
       while(true) {
-        const result = await readRecentSensorValues(deviceIds, 24, page);
+        const result = await readRecentSensorValues(deviceIds, NHoursAgo, page);
         values = [...values, ...result.results];
         if(!result.next) break;
         page = result.next;
