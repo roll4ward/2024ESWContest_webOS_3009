@@ -469,7 +469,7 @@ function getDeviceList(areaId, service) {
   return new Promise((resolve, reject) => {
     try {
       const query = {
-        select: ["_id", "areaId", "name", "type", "desc"],
+        select: ["_id", "areaId", "name", "type", "desc", "subtype"],
         areaId: areaId,
       };
       console.log("query: ", query);
@@ -533,6 +533,7 @@ function getSensorValuesOfAreaByTimeAsCSV(areaId, NHoursAgo, service) {
       });
 
       // 2. 고유한 subtype 목록 추출
+      console.log(deviceIdToSensor);
       const sensorTypes = Array.from(new Set(Object.values(deviceIdToSensor)));
       console.log("sensorTypes: ", sensorTypes);
 
