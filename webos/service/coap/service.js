@@ -162,9 +162,16 @@ service.register('read/recent', function(message) {
     service.call('luna://com.webos.service.db/find', { query: query }, (response) => {
         console.log(response);
         if (response.payload.returnValue) {
-            let result = response.payload.results;
-
-            console.log(result);
+            if (message.payload.deviceIds) {
+                let select = [];
+                response.payload.results.map((res) => {
+                 if (message.payload.deviceIds.includes(res.deviceId)) {
+                     select.push(res)
+                 }
+                }) 
+ 
+                response.payload.results = select;
+             }
             
             if (response.payload.next) {
                 message.respond({ returnValue: true, results: response.payload.results, next: response.payload.next });
