@@ -142,7 +142,8 @@ service.register('read/recent', function(message) {
         where: [
             { prop: 'deviceId', op: '=', val: message.payload.deviceId },
             { prop: 'time', op: '>=', val: n_hour_ago }
-        ]
+        ],
+        desc: true
     };
 
     service.call('luna://com.webos.service.db/find', { query: query }, (response) => {

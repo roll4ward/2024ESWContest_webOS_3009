@@ -36,7 +36,7 @@ export default function GraphContainer({ deviceID, refreshFlag }) {
     // 기기 내 값들 불러오기
     readRecentValues(deviceID, 24, (result) => {
       console.log("result in Graph : ", result);
-      setGraphValues(result);
+      setGraphValues(result.reverse());
     });
   }, [deviceID, refreshFlag]);
 
