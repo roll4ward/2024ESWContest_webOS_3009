@@ -27,9 +27,9 @@ function App() {
       });
     }
 
-    startSending(30, (result) => {
+    startSending(300, (result) => {
       if (result) {
-        console.log("CoAP Sending 시작");
+        console.log(`CoAP Sending 시작 interval : 5min`);
       }
 
       else {

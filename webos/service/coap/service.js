@@ -183,7 +183,7 @@ service.register('read/recent', function(message) {
             }
             message.respond({ returnValue: true, results: response.payload.results });
         } else {
-            message.respond({ returnValue: false, results: response.error });
+            message.respond({ returnValue: false, results: response.errorText });
         }
     });
 });

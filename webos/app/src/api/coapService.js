@@ -1,3 +1,5 @@
+import { callService } from "./serviceUtils";
+
 /**
  * 서비스와 메소드에 매칭되는 URL을 생성
  * @param {*} service 
@@ -45,25 +47,47 @@ export function readAllValues(deviceID, callback) {
  * @param {number} hour 조회할 시간
  * @param {*} callback 쿼리한 결과를 처리할 콜백 함수
  */
-export function readRecentValues(deviceID, hour, callback) {
-    let bridge = new WebOSServiceBridge();
-    bridge.onservicecallback = (msg) => {
-        msg = JSON.parse(msg);
-        if(!msg.returnValue) {
-            console.log(`Service call failed : ${msg.results}`);
-            return;
+export async function readRecentValues(deviceID, hour, callback) {
+    let next = null;
+    let results = [];
+    try {
+        while (true) {
+            const page_result = await readRecentValuesPage(deviceID, hour, next);
+            results = [...results, ...page_result.results]
+    
+            next = page_result.next;
+    
+            if (!next) break;
         }
 
-        if(callback) callback(msg.results);
-        console.log("Callback called ", callback);
+        if (callback) callback(results);
     }
+    catch (err) {
+        console.log("Service call failed : ", err);
+    }
+}
 
-    let query = {
-        deviceId: deviceID,
-        hour: hour
-    };
+function readRecentValuesPage(deviceID, hour, page) {
+    return new Promise((res, rej) => {
+        const bridge = new WebOSServiceBridge();
+        bridge.onservicecallback = (msg) => {
+            const response = JSON.parse(msg);
+            if (response.returnValue) {
+                res({results: response.results, next: response.next});
+            }
+            else {
+                rej(response.results);
+            }
+        }
 
-    bridge.call(getServiceURL("coap", "read/recent"), JSON.stringify(query));
+        const param = {
+            deviceId: deviceID,
+            hour: hour,
+            page: page
+        }
+
+        bridge.call(getServiceURL("coap", "read/recent"), JSON.stringify(param));
+    });
 }
 
 /**
