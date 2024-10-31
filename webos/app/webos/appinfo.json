@@ -1,10 +1,10 @@
 {
   "id": "xyz.rollforward.app",
   "version": "1.0.0",
-  "vendor": "My Company",
+  "vendor": "Rollforward",
   "type": "web",
   "main": "index.html",
-  "title": "My Awesome App",
+  "title": "AgriTalks",
   "icon": "icon.png",
   "allowVideoCapture": true,
   "allowAudioCapture": true,
